@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Install nginx and configure the root page
-
-apt update -y
-apt install -y nginx
+# Installs and configures Nginx web server
+apt-get update -y
+apt-get install -y nginx
+mkdir -p /var/www/html
 echo "Holberton School" > /var/www/html/index.html
-service nginx restart
+service nginx start
+nginx -s reload
