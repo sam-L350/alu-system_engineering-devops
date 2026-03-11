@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
-# Configure nginx with a custom 404 page
+# This script configures Nginx with a custom 404 page containing "Ceci n'est pas une page"
 
-set -e
-
-apt-get update
+apt-get update -y
 apt-get install -y nginx
 
-
 echo "Holberton School" > /var/www/html/index.html
-
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
 cat > /etc/nginx/sites-available/default << 'EOF'
@@ -17,7 +13,7 @@ server {
     listen [::]:80 default_server;
 
     root /var/www/html;
-    index index.html;
+    index index.html index.htm;
 
     server_name _;
 
@@ -27,15 +23,11 @@ server {
 
     error_page 404 /404.html;
 
-    location = /404.html {
-        internal;
-    }
-
     location / {
         try_files $uri $uri/ =404;
     }
 }
 EOF
 
-nginx -t
 service nginx restart
+
